@@ -1,0 +1,90 @@
+distance_map.py
+    class DistanceMap:
+        Attribute:
+            _map: Dict[Tuple[str, str], int]
+        Methods:
+            add_distance(self, a: str, b: str, d_1: int, d_2: int = -1) -> None
+            distance(self, a: str, b: str) -> int
+domain.py
+    class Parcel:
+        Attributes:
+            p_id: int
+            volume: int
+            source: str
+            destination: str
+    class Truck:
+        Attributes:
+            lst_parcel: List[Parcel]
+            route: List[str]
+            vol_capacity: int
+            ava_space: int
+            t_id: int
+        Methods:
+            pack(self, item: Parcel) -> bool
+            fullness(self) -> float
+            route_distance(self, dmap: DistanceMap) -> int
+    class Fleet:
+        Attributes:
+            trucks: List[Truck]
+        Methods:
+            add_truck(self, truck: Truck) -> None
+            num_trucks(self) -> int
+            num_nonempty_trucks(self) -> int
+            parcel_allocations(self) -> Dict[int, List[int]]
+            total_unused_space(self) -> int
+            _total_fullness(self) -> float
+            average_fullness(self) -> float
+            total_distance_travelled(self, dmap: DistanceMap) -> int
+            average_distance_travelled(self, dmap: DistanceMap) -> float
+            _used_trucks(self) -> List[Truck]
+container.py
+    _shorter(a: str, b: str) -> bool
+    class Container:
+        Methods:
+            add(self, item: Any) -> None
+            remove(self) -> Any
+            is_empty(self) -> bool
+    class PriorityQueue(Container)
+        Attributes:
+            _queue: List[Any]
+            _higher_priority: Callable[[Any, Any], bool]
+        Methods:
+            add(self, item: Any) -> None
+            remove(self) -> Any
+            is_empty(self) -> bool
+scheduler.py
+    class Scheduler
+    class RandomScheduler(Scheduler):
+        Method:
+            def schedule(self, parcels: List[Parcel], trucks: List[Truck], verbose: bool = False) -> List[Parcel]
+    class GreedyScheduler(Scheduler)
+        Attributes:
+            _higher_priority: Callable[[Union[Parcel, Truck], Union[Parcel, Truck]], bool]
+            _truck_priority: Callable[[Parcel, Parcel], bool]
+        Methods:
+            def __init__(self, config: Dict[str, str]) -> None
+            def schedule(self, parcels: List[Parcel], trucks: List[Truck], verbose: bool = False) -> List[Parcel]
+    def _non_increasing(a: Union[Parcel, Truck], b: Union[Parcel, Truck]) -> bool
+    def _non_decreasing(a: Union[Parcel, Truck], b: Union[Parcel, Truck]) -> bool
+    def _destination_non_increasing(a: Parcel, b: Parcel) -> bool
+    def _destination_non_decreasing(a: Parcel, b: Parcel) -> bool
+    def _choose_same_destination(lst: List[Truck], p: Parcel) -> List[Truck]
+experiment.py
+    class SchedulingExperiment
+        Attributes:
+            verbose: bool
+            scheduler: Scheduler
+            parcels: List[Parcel]
+            fleet: Fleet
+            dmap: DistanceMap
+            _stats: Dict[str, Union[int, float]]
+            _unscheduled: List[Parcel]
+        Methods:
+            def __init__(self, config: Dict[str, Union[str, bool]]) -> None
+            def run(self, report: bool = False) -> Dict[str, Union[int, float]]
+            def _compute_stats(self) -> None
+            def _print_report(self) -> None
+    def read_parcels(parcel_file: str) -> List[Parcel]
+    def read_distance_map(distance_map_file: str) -> DistanceMap
+    def read_trucks(truck_file: str, depot_location: str) -> Fleet
+    def simple_check(config_file: str) -> None

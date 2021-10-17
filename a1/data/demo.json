@@ -1,0 +1,9 @@
+{"depot_location": "Toronto",
+  "parcel_file": "data/parcel-data-small.txt",
+  "truck_file": "data/truck-data-small.txt",
+  "map_file": "data/map-data.txt",
+  "algorithm": "greedy",
+  "parcel_priority": "volume",
+  "parcel_order": "non-decreasing",
+  "truck_order": "non-decreasing",
+  "verbose": false}
